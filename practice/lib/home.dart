@@ -11,31 +11,69 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget _buildIconButton(IconData icon) {
-    return Container(
-      color: Colors.red,
-      width: 70, //taille a regler
-      margin: const EdgeInsets.all(8),
-      height: 70, //same
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-        onPressed: () {},
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 28),
-            const Text("Pickup", style: TextStyle(fontSize: 12)),
-          ],
-        ),
+  Widget _buildIconButton(IconData icon, String categorieName) {
+    return IntrinsicWidth(
+      child: Column(
+        children: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent, // pas de fond
+              shadowColor: Colors.transparent, // pas d’ombre
+              elevation: 0, // pas d’élévation
+              surfaceTintColor:
+                  Colors.transparent, // supprime le gris sur certains thèmes
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    0), // bord droit (ou change si besoin)
+                side: BorderSide.none,
+              ), // pas de bordure
+              padding: const EdgeInsets.all(10),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            onPressed: () {},
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: 50,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  categorieName,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
+  static const _categorieName = <String>[
+    "Favorites",
+    "Pickup",
+    "Grocery",
+    "Top Eats",
+    "Deals",
+    "Special Offer",
+    "Week Offer",
+    "Best of the month"
+  ];
   static const _iconTypes = <IconData>[
+    Icons.favorite_border_rounded,
     Icons.shopping_bag,
     Icons.add_location_sharp,
     Icons.zoom_in_outlined,
     Icons.auto_awesome_motion,
+    Icons.auto_awesome_motion,
+    Icons.auto_awesome_motion,
+    Icons.star_border, // ← ajoute celui-ci pour égaliser
   ];
   @override
   Widget build(BuildContext context) {
@@ -103,23 +141,20 @@ class _HomePageState extends State<HomePage> {
             //END PROMOTION PICTURE
             const SizedBox(height: 20),
             CarouselSlider.builder(
-              itemCount: (_iconTypes.length / 4).ceil(),
+              itemCount: _iconTypes.length,
               itemBuilder: (context, index, realIdx) {
-                final first = index * 4;
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (int i = 0; i < 4; i++)
-                      if (first + i < _iconTypes.length)
-                        _buildIconButton(_iconTypes[first + i]),
-                  ],
-                );
+                return _buildIconButton(
+                    _iconTypes[index], _categorieName[index]);
               },
               options: CarouselOptions(
-                viewportFraction: 1.0,
+                viewportFraction: 0.28, // 👈 4 éléments visibles
+
                 height: 100,
                 enableInfiniteScroll: false,
+                enlargeCenterPage: false,
+                scrollPhysics: const BouncingScrollPhysics(),
+                padEnds:
+                    false, // ✅ Désactive le padding automatique aux extrémités
               ),
             )
           ],
