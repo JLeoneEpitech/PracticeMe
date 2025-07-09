@@ -55,6 +55,56 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildLastOrder(String imagePath, String kitchenName, int itemCount,
+      int daysDifference, description) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      color: const Color.fromARGB(255, 247, 236, 236),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+                color: Colors.blue,
+                height: 150,
+                child: Image(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                )),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              height: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        kitchenName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const Text("4.8")
+                    ],
+                  ),
+                  Text("$itemCount plats - Il y a $daysDifference jours"),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("1 burgers américain")
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   static const _categorieName = <String>[
     "Favorites",
     "Pickup",
@@ -65,6 +115,7 @@ class _HomePageState extends State<HomePage> {
     "Week Offer",
     "Best of the month"
   ];
+
   static const _iconTypes = <IconData>[
     Icons.favorite_border_rounded,
     Icons.shopping_bag,
@@ -75,6 +126,35 @@ class _HomePageState extends State<HomePage> {
     Icons.auto_awesome_motion,
     Icons.star_border, // ← ajoute celui-ci pour égaliser
   ];
+  static const _lastOrderImage = <String>[
+    'ubereatrestaurantpic.png',
+    'ubereatrestaurantpic.png',
+    'ubereatrestaurantpic.png',
+    'ubereatrestaurantpic.png',
+  ];
+  static const _lastOrderRestaurantName = <String>[
+    "Kfc",
+    "Mcdonalds",
+    "Burger Kings",
+    "Chez Ronnie"
+  ];
+  static final _LastOrderDate = <DateTime>[
+    DateTime(2025, 7, 8, 13, 05),
+    DateTime(2025, 7, 7, 13, 05),
+    DateTime(2025, 7, 6, 13, 05),
+    DateTime(2025, 7, 5, 13, 05),
+  ];
+
+  int calculTimeSpend(DateTime oldestDate) {
+    DateTime now = DateTime.now();
+    print("DateTime.now()");
+    print(DateTime.now());
+    print("oldestDate");
+    print(oldestDate);
+    Duration timeSpendBetween = oldestDate.difference(now).abs();
+    return timeSpendBetween.inDays;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -148,6 +228,47 @@ class _HomePageState extends State<HomePage> {
               },
               options: CarouselOptions(
                 viewportFraction: 0.28, // 👈 4 éléments visibles
+
+                height: 100,
+                enableInfiniteScroll: false,
+                enlargeCenterPage: false,
+                scrollPhysics: const BouncingScrollPhysics(),
+                padEnds:
+                    false, // ✅ Désactive le padding automatique aux extrémités
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Order Again",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "See all >",
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            //'ubereatpromotion.png'
+            CarouselSlider.builder(
+              itemCount: 4,
+              itemBuilder: (context, index, realIdx) {
+                return _buildLastOrder(
+                    _lastOrderImage[index],
+                    _lastOrderRestaurantName[index],
+                    4,
+                    calculTimeSpend(_LastOrderDate[index]),
+                    "description");
+              },
+              options: CarouselOptions(
+                viewportFraction: 0.8, // 👈 4 éléments visibles
 
                 height: 100,
                 enableInfiniteScroll: false,
