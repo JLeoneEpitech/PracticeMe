@@ -92,10 +92,10 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   Text("$itemCount plats - Il y a $daysDifference jours"),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text("1 burgers américain")
+                  const Text("1 burgers américain")
                 ],
               ),
             ),
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
     "Burger Kings",
     "Chez Ronnie"
   ];
-  static final _LastOrderDate = <DateTime>[
+  static final _lastOrderDate = <DateTime>[
     DateTime(2025, 7, 8, 13, 05),
     DateTime(2025, 7, 7, 13, 05),
     DateTime(2025, 7, 6, 13, 05),
@@ -147,10 +147,6 @@ class _HomePageState extends State<HomePage> {
 
   int calculTimeSpend(DateTime oldestDate) {
     DateTime now = DateTime.now();
-    print("DateTime.now()");
-    print(DateTime.now());
-    print("oldestDate");
-    print(oldestDate);
     Duration timeSpendBetween = oldestDate.difference(now).abs();
     return timeSpendBetween.inDays;
   }
@@ -264,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                     _lastOrderImage[index],
                     _lastOrderRestaurantName[index],
                     4,
-                    calculTimeSpend(_LastOrderDate[index]),
+                    calculTimeSpend(_lastOrderDate[index]),
                     "description");
               },
               options: CarouselOptions(
