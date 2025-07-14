@@ -273,6 +273,44 @@ class _HomePageState extends State<HomePage> {
                 padEnds:
                     false, // ✅ Désactive le padding automatique aux extrémités
               ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey[300]!, // Couleur du trait
+                    width: 0.5, // Épaisseur du trait
+                  ),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Les plus populaire à proximité",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    IconButton(
+                        padding: EdgeInsets.all(
+                            7), // Enlève l'espace autour de l'icône
+                        constraints:
+                            const BoxConstraints(), // Enlève la taille minimale
+                        iconSize: 15,
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.grey[200])),
+                        onPressed: () {},
+                        icon: const Icon(
+                          color: Colors.black,
+                          Icons.arrow_forward_rounded,
+                        ))
+                  ],
+                )
+              ]),
             )
           ],
         ),
